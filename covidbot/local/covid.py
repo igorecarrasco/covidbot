@@ -3,15 +3,15 @@ COVID data fetcher
 """
 from typing import ClassVar
 
+import numpy as np
 import requests
 from fuzzywuzzy import process
 from numpy import random
 
-from .twitter import Twitter
-import numpy as np
+from .utils import distribution
 
 
-class Covid(Twitter):
+class Covid:
     api_base: ClassVar[str] = "https://corona.lmao.ninja"
     non_countries: ClassVar[list] = ["Diamond Princess"]
 
@@ -36,7 +36,7 @@ class Covid(Twitter):
 
         return data
 
-    def country(self, country: str) -> dict:
+    def __country(self, country: str) -> dict:
         """
         Gets data for a specific country. Uses fuzzy matching 
         to get the most highly likely match for an input 
@@ -54,15 +54,14 @@ class Covid(Twitter):
 
         return [i for i in data if i["country"] == c][0]
 
-    def random_country(self) -> dict:
+    def random_country_data(self) -> dict:
         """
         Gets a random country, weighted by a Pareto
         distribution so we give countries with higher
         case loads more prominence.
         """
+
         c_data = self.countries_data
-        d = random.pareto(1, len(c_data))
-        distribution = list(d / d.sum(axis=0, keepdims=1)).sort(reverse=True)
-        draw = random.choice(c_data, 1, p=distribution)
+        draw = random.choice(c_data, 1, p=distribution(len(c_data)))
 
         return draw[0]

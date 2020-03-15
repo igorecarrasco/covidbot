@@ -130,3 +130,5 @@ dmypy.json
 covidbot/keys.yaml
 covidbot/.DS_Store
 .DS_Store
+notebooks/plot.png
+covidbot/plot.png

@@ -4,9 +4,10 @@ from typing import Callable
 import humanize
 
 from .covid import Covid
+from .graph import Graph
 
 
-class Alerts(Covid):
+class Alerts(Covid, Graph):
     def __init__(self):
         super().__init__()
 
@@ -18,7 +19,9 @@ class Alerts(Covid):
         to post countries more.
         """
         chosen: Callable = choices(
-            [self.world_data, self.random_country()], weights=[0.1, 0.9], k=1
+            [self.world_data, self.random_country_data(), self.random_country_graph()],
+            weights=[0.1, 0.5, 0.4],
+            k=1,
         )
         return chosen[0]
 
@@ -33,7 +36,10 @@ class Alerts(Covid):
         {'cases': 162386, 'deaths': 5984, 'recovered': 75967}
         """
         data = self.chosen_data
-        if not data.get("country"):
+
+        if data.get("graph"):
+            self.__graph(data)
+        elif not data.get("country"):
             self.__world(data)
         elif data.get("cases") == 0:
             self.__no_cases(data)
@@ -43,6 +49,15 @@ class Alerts(Covid):
             self.__first_deaths(data)
         else:
             self.__country(data)
+
+    def __graph(self, data):
+        cases = data["cases"]
+        country = data["country"]
+
+        self.post(
+            f"Evolution of number of cases for {country}, with a total confirmed of {cases}",
+            media_ids=[self.media_id],
+        )
 
     def __world(self, data):
         cases = data["cases"]

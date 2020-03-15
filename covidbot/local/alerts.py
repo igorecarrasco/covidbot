@@ -1,11 +1,14 @@
 from random import choices
 from typing import Callable
+
 import humanize
+
+from .covid import Covid
 
 
 class Alerts(Covid):
     def __init__(self):
-        pass
+        super().__init__()
 
     @property
     def chosen_data(self) -> Callable:
@@ -17,7 +20,7 @@ class Alerts(Covid):
         chosen: Callable = choices(
             [self.world_data, self.random_country], weights=[0.1, 0.9], k=1
         )
-        return chosen
+        return chosen[0]()
 
     def generate(self):
         """
@@ -30,7 +33,6 @@ class Alerts(Covid):
         {'cases': 162386, 'deaths': 5984, 'recovered': 75967}
         """
         data = self.chosen_data
-
         if not data.get("country"):
             self.__world(data)
         elif data.get("cases") == data.get("todayCases"):
@@ -83,4 +85,3 @@ class Alerts(Covid):
         self.post(
             f"Latest COVID-19 data: {data['country']} still reports no infections or deaths."
         )
-

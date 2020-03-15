@@ -14,9 +14,6 @@ class Covid(Twitter):
     api_base: ClassVar[str] = "https://corona.lmao.ninja"
     non_countries: ClassVar[list] = ["Diamond Princess"]
 
-    def __init__(self):
-        super().__init__()
-
     @property
     def world_data(self) -> dict:
         """
@@ -66,4 +63,4 @@ class Covid(Twitter):
         distribution = list(random.pareto(1, len(c_data))).reverse()
         draw = random.choice(c_data, 1, p=distribution)
 
-        return draw
+        return draw[0]

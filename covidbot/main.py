@@ -6,11 +6,9 @@ from typing import Dict, Optional, Text
 
 from flask import Request, jsonify
 
-from local.covid import Covid
-from local.twitter import Twitter
+from local.alerts import Alerts
 
-t = Twitter()
-c = Covid()
+a = Alerts()
 
 
 def main(request: Request):
@@ -23,11 +21,10 @@ def main(request: Request):
         HTTP request object.
     """
 
-    t.post(tweet_rate)
+    a.generate()
 
     return jsonify({"sucess": True})
 
 
 if __name__ == "__main__":
-    print(c.world_data)
     main("foo")

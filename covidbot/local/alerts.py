@@ -18,9 +18,9 @@ class Alerts(Covid):
         to post countries more.
         """
         chosen: Callable = choices(
-            [self.world_data, self.random_country], weights=[0.1, 0.9], k=1
+            [self.world_data, self.random_country()], weights=[0.1, 0.9], k=1
         )
-        return chosen[0]()
+        return chosen[0]
 
     def generate(self):
         """

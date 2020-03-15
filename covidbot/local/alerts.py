@@ -39,7 +39,7 @@ class Alerts(Covid):
             self.__no_cases(data)
         elif data.get("cases") == data.get("todayCases"):
             self.__first_batch(data)
-        elif data.get("deaths") == data.get("todayDeaths") and data.get("deaths") == 0:
+        elif data.get("deaths") == data.get("todayDeaths") and data.get("deaths") != 0:
             self.__first_deaths(data)
         else:
             self.__country(data)

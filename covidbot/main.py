@@ -1,5 +1,5 @@
 """
-Cloud-scheduler HTTP trigger for 50CentBot
+Cloud-scheduler HTTP trigger for COVID-19 Bot
 """
 from datetime import datetime
 from typing import Dict, Optional, Text

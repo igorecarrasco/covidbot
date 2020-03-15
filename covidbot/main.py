@@ -27,5 +27,4 @@ def main(request: Request):
 
 
 if __name__ == "__main__":
-    pass
-    # main("foo")
+    main("foo")

@@ -8,6 +8,7 @@ from fuzzywuzzy import process
 from numpy import random
 
 from .twitter import Twitter
+import numpy as np
 
 
 class Covid(Twitter):
@@ -55,12 +56,13 @@ class Covid(Twitter):
 
     def random_country(self) -> dict:
         """
-        Gets a random country, weighted by a reversed Pareto
+        Gets a random country, weighted by a Pareto
         distribution so we give countries with higher
         case loads more prominence.
         """
         c_data = self.countries_data
-        distribution = list(random.pareto(1, len(c_data))).reverse()
+        d = random.pareto(1, len(c_data))
+        distribution = list(d / d.sum(axis=0, keepdims=1)).sort(reverse=True)
         draw = random.choice(c_data, 1, p=distribution)
 
         return draw[0]

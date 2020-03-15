@@ -35,12 +35,12 @@ class Alerts(Covid):
         data = self.chosen_data
         if not data.get("country"):
             self.__world(data)
-        elif data.get("cases") == data.get("todayCases"):
-            self.__first_batch(data)
-        elif data.get("deaths") == data.get("todayDeaths"):
-            self.__first_deaths(data)
         elif data.get("cases") == 0:
             self.__no_cases(data)
+        elif data.get("cases") == data.get("todayCases"):
+            self.__first_batch(data)
+        elif data.get("deaths") == data.get("todayDeaths") and data.get("deaths") == 0:
+            self.__first_deaths(data)
         else:
             self.__country(data)
 
@@ -48,20 +48,20 @@ class Alerts(Covid):
         cases = data["cases"]
         deaths = data["deaths"]
 
-        rate = round(cases / deaths * 100, 2)
+        rate = round(deaths / cases * 100, 2)
 
         self.post(
-            f"Latest worldwide COVID-19 data: {humanize.intcomma(cases)} cases, {humanize.intcomma(deaths)} deaths.\nA {rate}% mortality rate."
+            f"Latest worldwide COVID-19 data: {humanize.intcomma(cases)} cases, {humanize.intcomma(deaths)} deaths.\n\nA {rate}% mortality rate."
         )
 
     def __country(self, data):
         cases = data["cases"]
         deaths = data["deaths"]
 
-        rate = round(cases / deaths * 100, 2)
+        rate = round(deaths / cases * 100, 2)
 
         self.post(
-            f"Latest worldwide COVID-19 data for {data['country']}: {humanize.intcomma(cases)} cases, of those {data['todayCases']} today; {humanize.intcomma(deaths)} deaths, of those {data['todayDeaths']} today.\nA {rate}% mortality rate."
+            f"Latest worldwide COVID-19 data for {data['country']}: {humanize.intcomma(cases)} cases, of those {data['todayCases']} today; {humanize.intcomma(deaths)} deaths, of those {data['todayDeaths']} today.\n\nA {rate}% mortality rate."
         )
 
     def __first_batch(self, data):
@@ -76,9 +76,9 @@ class Alerts(Covid):
         cases = data["cases"]
         deaths = data["deaths"]
 
-        rate = round(cases / deaths * 100, 2)
+        rate = round(deaths / cases * 100, 2)
         self.post(
-            f"First deaths by COVID-19 reported in {data['country']}: {humanize.intcomma(deaths)} people have died out of {humanize.intcomma(cases)} confirmed cases.\nA {rate}% mortality rate."
+            f"First deaths by COVID-19 reported in {data['country']}: {humanize.intcomma(deaths)} people have died out of {humanize.intcomma(cases)} confirmed cases.\n\nA {rate}% mortality rate."
         )
 
     def __no_cases(self, data):

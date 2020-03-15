@@ -61,7 +61,7 @@ class Alerts(Covid):
         rate = round(deaths / cases * 100, 2)
 
         self.post(
-            f"Latest COVID-19 data for {data['country']}: {humanize.intcomma(cases)} cases, of those {data['todayCases']} today; {humanize.intcomma(deaths)} deaths, of those {data['todayDeaths']} today.\n\nA {rate}% mortality rate."
+            f"Latest COVID-19 data for {data['country']}: {humanize.intcomma(cases)} case{'s' if cases > 1 else ''}, of those {data['todayCases']} today; {humanize.intcomma(deaths)} death{'s' if deaths > 1 else ''}, of those {data['todayDeaths']} today.\n\nA {rate}% mortality rate."
         )
 
     def __first_batch(self, data):
@@ -69,7 +69,7 @@ class Alerts(Covid):
         deaths = data["deaths"]
 
         self.post(
-            f"First cases of COVID-19 confirmed in {data['country']}: {humanize.intcomma(cases)} cases, with {humanize.intcomma(deaths)} deaths reported."
+            f"First case{'s' if cases > 1 else ''} of COVID-19 confirmed in {data['country']}: {humanize.intcomma(cases)} case{'s' if cases > 1 else ''}, with {humanize.intcomma(deaths)} death{'s' if deaths > 1 else ''} reported."
         )
 
     def __first_deaths(self, data):
@@ -78,7 +78,7 @@ class Alerts(Covid):
 
         rate = round(deaths / cases * 100, 2)
         self.post(
-            f"First deaths by COVID-19 reported in {data['country']}: {humanize.intcomma(deaths)} people have died out of {humanize.intcomma(cases)} confirmed cases.\n\nA {rate}% mortality rate."
+            f"First death{'s' if cases > 1 else ''} by COVID-19 reported in {data['country']}: {humanize.intcomma(deaths)} {'people' if cases > 1 else 'person'} have died out of {humanize.intcomma(cases)} confirmed cases.\n\nA {rate}% mortality rate."
         )
 
     def __no_cases(self, data):

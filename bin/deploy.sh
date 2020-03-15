@@ -18,5 +18,7 @@ gcloud functions deploy covid19bot \
     --runtime python37 \
     --trigger-http \
     --entry-point main \
-    --memory 128MB \
+    --memory 256MB \
     --project $PROJECT 
+
+cd ..

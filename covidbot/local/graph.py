@@ -36,8 +36,8 @@ class Graph(Twitter):
         indexes = self.df.index
         dist = distribution(len(indexes))
 
-        chosen = np.random.choice(indexes, 1, p=dist)
-        data = self.df.loc[chosen[0], :]
+        chosen = np.random.choice(indexes, 1, p=dist)[0]
+        data = self.df.loc[chosen, :]
         return chosen, data
 
     def make_graph(self, country, series):
@@ -79,4 +79,4 @@ class Graph(Twitter):
         country, data = self.random_country()
         cases_total = self.make_graph(country, data)
         self.media_id = self.upload_image()
-        return {"cases": cases_total, "country": country}
+        return {"graph": True, "cases": cases_total, "country": country}

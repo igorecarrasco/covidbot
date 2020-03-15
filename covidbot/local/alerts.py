@@ -55,7 +55,7 @@ class Alerts(Covid, Graph):
         country = data["country"]
 
         self.post(
-            f"Evolution of number of cases for {country}, with a total confirmed of {cases}",
+            f"Evolution of number of cases for {country}, with a total confirmed of {humanize.intcomma(cases)}",
             media_ids=[self.media_id],
         )
 

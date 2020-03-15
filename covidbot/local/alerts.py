@@ -61,7 +61,7 @@ class Alerts(Covid):
         rate = round(deaths / cases * 100, 2)
 
         self.post(
-            f"Latest worldwide COVID-19 data for {data['country']}: {humanize.intcomma(cases)} cases, of those {data['todayCases']} today; {humanize.intcomma(deaths)} deaths, of those {data['todayDeaths']} today.\n\nA {rate}% mortality rate."
+            f"Latest COVID-19 data for {data['country']}: {humanize.intcomma(cases)} cases, of those {data['todayCases']} today; {humanize.intcomma(deaths)} deaths, of those {data['todayDeaths']} today.\n\nA {rate}% mortality rate."
         )
 
     def __first_batch(self, data):

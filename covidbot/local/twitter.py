@@ -18,4 +18,5 @@ class Twitter:
         )
 
     def post(self, text: str):
-        r = self.twitter.update_status(status=text)
+        self.twitter.update_status(status=text)
+

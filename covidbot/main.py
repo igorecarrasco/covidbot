@@ -6,9 +6,11 @@ from typing import Dict, Optional, Text
 
 from flask import Request, jsonify
 
+from local.covid import Covid
 from local.twitter import Twitter
 
 t = Twitter()
+c = Covid()
 
 
 def main(request: Request):
@@ -27,4 +29,5 @@ def main(request: Request):
 
 
 if __name__ == "__main__":
+    print(c.world_data)
     main("foo")

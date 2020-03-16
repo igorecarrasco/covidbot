@@ -76,7 +76,7 @@ class Alerts(Covid, Graph):
         rate = round(deaths / cases * 100, 2)
 
         self.post(
-            f"Latest COVID-19 data for {data['country']}: {humanize.intcomma(cases)} case{'s' if cases > 1 else ''}, of those {data['todayCases']} today; {humanize.intcomma(deaths)} death{'s' if deaths > 1 else ''}, of those {data['todayDeaths']} today.\n\nA {rate}% fatality rate."
+            f"Latest COVID-19 data for {data['country']}: {humanize.intcomma(cases)} case{'s' if cases > 1 else ''}, of those {humanize.intcomma(data['todayCases'])} today; {humanize.intcomma(deaths)} death{'s' if deaths > 1 else ''}, of those {humanize.intcomma(data['todayDeaths'])} today.\n\nA {rate}% fatality rate."
         )
 
     def __first_batch(self, data):

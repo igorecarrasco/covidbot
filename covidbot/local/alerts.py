@@ -7,7 +7,7 @@ from .covid import Covid
 from .graph import Graph
 
 
-class Alerts(Covid, Graph):
+class Alerts(Covid, Graph, Image):
     def __init__(self):
         super().__init__()
 
@@ -19,8 +19,13 @@ class Alerts(Covid, Graph):
         to post countries more.
         """
         chosen: Callable = choices(
-            [self.world_data, self.random_country_data(), self.random_country_graph()],
-            weights=[0.1, 0.7, 0.2],
+            [
+                self.world_data,
+                self.random_country_data(),
+                self.random_country_graph(),
+                self.random_image(),
+            ],
+            weights=[0.1, 0.6, 0.2, 0.1],
             k=1,
         )
         return chosen[0]
@@ -37,7 +42,9 @@ class Alerts(Covid, Graph):
         """
         data = self.chosen_data
 
-        if data.get("graph"):
+        if type(data) != dict:
+            self.__image(data)
+        elif data.get("graph"):
             self.__graph(data)
         elif not data.get("country"):
             self.__world(data)
@@ -49,6 +56,12 @@ class Alerts(Covid, Graph):
             self.__first_deaths(data)
         else:
             self.__country(data)
+
+    def __image(self, data):
+        self.post(
+            f"Guidance from the World Health Organization (WHO)",
+            media_ids=[self.random_filename],
+        )
 
     def __graph(self, data):
         cases = data["cases"]

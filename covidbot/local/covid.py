@@ -5,7 +5,7 @@ from typing import ClassVar
 
 import numpy as np
 import requests
-from fuzzywuzzy import process
+from rapidfuzz import process
 from numpy import random
 
 from .utils import distribution

@@ -6,6 +6,7 @@ from typing import ClassVar
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+import matplotlib.dates as mdates
 
 from .twitter import Twitter
 from .utils import distribution
@@ -36,7 +37,7 @@ class Graph(Twitter):
         indexes = self.df.index
         dist = distribution(len(indexes))
 
-        chosen = np.random.choice(indexes, 1, p=dist)[0]
+        chosen = np.random.choice(indexes, 1)[0]
         data = self.df.loc[chosen, :]
         return chosen, data
 
@@ -65,9 +66,12 @@ class Graph(Twitter):
                 int(round(mx // 2500, len(str(mx // 2500)) * -1 + 2)),
             ],
         )
-
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%d%b%Y"))
         plt.margins(0.02)
         plt.title(f"COVID-19 cases: {country}")
+        fig = plt.figure()
+        fig.autofmt_xdate()
+
         series.plot(marker="o")
         plt.savefig("/tmp/plot.png", bbox_inches="tight")
         return mx
@@ -78,5 +82,5 @@ class Graph(Twitter):
         """
         country, data = self.random_country()
         cases_total = self.make_graph(country, data)
-        self.media_id = self.upload_image()
+        self.media_id = self.upload_image("/tmp/plot.png")
         return {"graph": True, "cases": cases_total, "country": country}

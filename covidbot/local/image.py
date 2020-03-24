@@ -7,6 +7,7 @@ import random
 
 class Image:
     def random_image(self):
-        files = Path("local/images").glob("*.*")
+        files = Path("images").glob("*.*")
         self.random_filename = random.choice([f for f in files])
-        return True
+        self.media_id = self.upload_image(self.random_filename)
+        return {"image": True}

@@ -23,11 +23,11 @@ class Twitter:
         else:
             self.twitter.update_status(status=text, media_ids=media_ids)
 
-    def upload_image(self) -> str:
+    def upload_image(self, path) -> str:
         """
         Uploads image to Twitter. Returns its media id
         """
-        with open("/tmp/plot.png", "rb") as f:
+        with open(path, "rb") as f:
             img = b64encode(f.read())
             i = 0
             while i < 10:

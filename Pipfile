@@ -9,7 +9,7 @@ flask = "*"
 requests = "*"
 
 [packages]
-fuzzywuzzy = {extras = ["speedup"],version = "*"}
+rapidfuzz = "*"
 numpy = "*"
 twython = "*"
 humanize = "*"

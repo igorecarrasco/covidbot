@@ -26,7 +26,11 @@ class Graph(Twitter):
             .sum()
             .replace(0, np.nan)
             .dropna()
+            .rename(
+                columns=lambda x: datetime.strptime(x, "%m/%d/%y").strftime("%d%b%Y")
+            )
         )
+
         self.df = self.df.sort_values(by=self.df.columns[-1], ascending=False)
 
     def random_country(self):
@@ -37,7 +41,7 @@ class Graph(Twitter):
         indexes = self.df.index
         dist = distribution(len(indexes))
 
-        chosen = np.random.choice(indexes, 1)[0]
+        chosen = np.random.choice(indexes, 1, p=dist)[0]
         data = self.df.loc[chosen, :]
         return chosen, data
 

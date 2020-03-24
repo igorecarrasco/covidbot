@@ -5,6 +5,7 @@ import humanize
 
 from .covid import Covid
 from .graph import Graph
+from .image import Image
 
 
 class Alerts(Covid, Graph, Image):
@@ -25,7 +26,7 @@ class Alerts(Covid, Graph, Image):
                 self.random_country_graph(),
                 self.random_image(),
             ],
-            weights=[0.1, 0.6, 0.2, 0.1],
+            weights=[0.2, 0.4, 0.2, 0.2],
             k=1,
         )
         return chosen[0]
@@ -42,7 +43,7 @@ class Alerts(Covid, Graph, Image):
         """
         data = self.chosen_data
 
-        if type(data) != dict:
+        if data.get("image"):
             self.__image(data)
         elif data.get("graph"):
             self.__graph(data)

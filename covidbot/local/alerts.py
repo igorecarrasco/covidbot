@@ -26,7 +26,7 @@ class Alerts(Covid, Graph, Image):
                 self.random_country_graph(),
                 self.random_image(),
             ],
-            weights=[0.2, 0.4, 0.2, 0.2],
+            weights=[0.2, 0.5, 0.2, 0.1],
             k=1,
         )
         return chosen[0]
@@ -61,7 +61,7 @@ class Alerts(Covid, Graph, Image):
     def __image(self, data):
         self.post(
             f"Guidance from the World Health Organization (WHO)",
-            media_ids=[self.random_filename],
+            media_ids=[self.media_id],
         )
 
     def __graph(self, data):

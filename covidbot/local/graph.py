@@ -57,19 +57,17 @@ class Graph(Twitter):
 
         ax = plt.gca()
 
-        plt.style.use("seaborn-darkgrid")  # This is a nice theme to use.
         mx = max(map(int, list(series)))
-
-        plt.margins(0.02)
-        plt.title(
-            f"COVID-19 cases: {country.replace('*', '')}"
-        )  # We are not going to follow JHU's practice of putting an asterisk in Taiwan's name.
+        # We are not going to follow JHU's practice of putting an asterisk in Taiwan's name.
 
         fig = plt.figure(figsize=(12, 6.75))
         ax = series.plot(marker="o")
         ax.set_yscale("log")  # Use logarithmic scale for clarity
         fig.autofmt_xdate()
         ax.yaxis.set_major_formatter(StrMethodFormatter("{x:.0f}"))
+        plt.style.use("seaborn-darkgrid")  # This is a nice theme to use.
+        plt.margins(0.02)
+        plt.title(f"COVID-19 cases: {country.replace('*', '')}")
         plt.savefig("/tmp/plot.png", bbox_inches="tight")
 
         return mx

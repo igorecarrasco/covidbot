@@ -73,7 +73,7 @@ class Alerts(Covid, Graph, Image):
         media_id = self.upload_image(img_path)
 
         self.post(
-            f"Evolution of number of cases for {country}, with a total confirmed of {humanize.intcomma(cases)}",
+            f"Evolution of number of cases for {country.replace('*', '')}, with a total confirmed of {humanize.intcomma(cases)}",
             media_ids=[media_id],
         )
 

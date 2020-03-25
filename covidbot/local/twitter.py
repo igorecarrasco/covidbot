@@ -42,5 +42,5 @@ class Twitter:
                     continue
                 else:
                     return media_id
-            else:
-                raise ValueError("Couldn't upload media.")
+
+        raise ValueError("Couldn't upload media.")

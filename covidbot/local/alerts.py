@@ -59,18 +59,22 @@ class Alerts(Covid, Graph, Image):
             self.__country(data)
 
     def __image(self, data):
+        img_path = data["img_path"]
+        media_id = self.upload_image(img_path)
+
         self.post(
-            f"Guidance from the World Health Organization (WHO)",
-            media_ids=[self.media_id],
+            f"Guidance from the World Health Organization (WHO)", media_ids=[media_id],
         )
 
     def __graph(self, data):
         cases = data["cases"]
         country = data["country"]
+        img_path = data["img_path"]
+        media_id = self.upload_image(img_path)
 
         self.post(
             f"Evolution of number of cases for {country}, with a total confirmed of {humanize.intcomma(cases)}",
-            media_ids=[self.media_id],
+            media_ids=[media_id],
         )
 
     def __world(self, data):

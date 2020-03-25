@@ -1,12 +1,14 @@
 """
 Makes graphs based on the Johns Hopkings University tally of COVID-19 cases/deaths
 """
+from datetime import datetime
 from typing import ClassVar
 
+import matplotlib.dates as mdates
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-import matplotlib.dates as mdates
+from matplotlib.ticker import StrMethodFormatter
 
 from .twitter import Twitter
 from .utils import distribution
@@ -52,32 +54,22 @@ class Graph(Twitter):
         same time, which is less than ideal but this is where we
         landed for now... may revisit later. 
         """
-        plt.figure(figsize=(12, 6.75))
 
         ax = plt.gca()
 
-        ax.set_yscale("log")  # Use logarithmic scale for clarity
-
         plt.style.use("seaborn-darkgrid")  # This is a nice theme to use.
         mx = max(map(int, list(series)))
-        plt.yticks(
-            [mx, mx // 10, mx // 100, mx // 500, mx // 2500],
-            [
-                int(round(mx, len(str(mx)) * -1 + 2)),
-                int(round(mx // 10, len(str(mx // 10)) * -1 + 2)),
-                int(round(mx // 100, len(str(mx // 100)) * -1 + 2)),
-                int(round(mx // 500, len(str(mx // 500)) * -1 + 2)),
-                int(round(mx // 2500, len(str(mx // 2500)) * -1 + 2)),
-            ],
-        )
-        ax.xaxis.set_major_formatter(mdates.DateFormatter("%d%b%Y"))
+
         plt.margins(0.02)
         plt.title(f"COVID-19 cases: {country}")
-        fig = plt.figure()
-        fig.autofmt_xdate()
 
-        series.plot(marker="o")
+        fig = plt.figure(figsize=(12, 6.75))
+        ax = series.plot(marker="o")
+        ax.set_yscale("log")  # Use logarithmic scale for clarity
+        fig.autofmt_xdate()
+        ax.yaxis.set_major_formatter(StrMethodFormatter("{x:.0f}"))
         plt.savefig("/tmp/plot.png", bbox_inches="tight")
+
         return mx
 
     def random_country_graph(self):
@@ -86,5 +78,10 @@ class Graph(Twitter):
         """
         country, data = self.random_country()
         cases_total = self.make_graph(country, data)
-        self.media_id = self.upload_image("/tmp/plot.png")
-        return {"graph": True, "cases": cases_total, "country": country}
+
+        return {
+            "graph": True,
+            "cases": cases_total,
+            "country": country,
+            "img_path": "/tmp/plot.png",
+        }

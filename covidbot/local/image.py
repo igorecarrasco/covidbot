@@ -9,5 +9,4 @@ class Image:
     def random_image(self):
         files = Path("/user_code/local/images").glob("*.*")
         self.random_filename = random.choice([f for f in files])
-        self.media_id = self.upload_image(self.random_filename)
-        return {"image": True}
+        return {"image": True, "img_path": self.random_filename}

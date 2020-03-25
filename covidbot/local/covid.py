@@ -63,5 +63,8 @@ class Covid:
 
         c_data = self.countries_data
         draw = random.choice(c_data, 1, p=distribution(len(c_data)))
-
-        return draw[0]
+        country = draw[0]
+        country["country"] = country.pop("country").replace(
+            "*", ""
+        )  # The underlying data source is adding an asterisk to Taiwan. We're not going to follow that.
+        return country

@@ -61,7 +61,9 @@ class Graph(Twitter):
         mx = max(map(int, list(series)))
 
         plt.margins(0.02)
-        plt.title(f"COVID-19 cases: {country}")
+        plt.title(
+            f"COVID-19 cases: {country.replace('*', '')}"
+        )  # We are not going to follow JHU's practice of putting an asterisk in Taiwan's name.
 
         fig = plt.figure(figsize=(12, 6.75))
         ax = series.plot(marker="o")

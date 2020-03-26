@@ -17,10 +17,16 @@ from .utils import distribution
 class Graph(Twitter):
     cases_csv: ClassVar[
         str
-    ] = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+    ] = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 
     def __init__(self):
         super().__init__()
+
+    def random_country(self):
+        """
+        Gets a country at random. Weights more highly for countries
+        with more cases, using a Pareto distribution.
+        """
         self.df = (  # Get the data in a format we want to work with
             pd.read_csv(self.cases_csv)
             .drop(columns=["Province/State", "Lat", "Long"])
@@ -35,11 +41,6 @@ class Graph(Twitter):
 
         self.df = self.df.sort_values(by=self.df.columns[-1], ascending=False)
 
-    def random_country(self):
-        """
-        Gets a country at random. Weights more highly for countries
-        with more cases, using a Pareto distribution.
-        """
         indexes = self.df.index
         dist = distribution(len(indexes))
 

@@ -8,8 +8,6 @@ from flask import Request, jsonify
 
 from local.alerts import Alerts
 
-a = Alerts()
-
 
 def main(request: Request):
     """
@@ -20,11 +18,7 @@ def main(request: Request):
     request (flask.Request):
         HTTP request object.
     """
-
+    a = Alerts()
     a.generate()
 
     return jsonify({"sucess": True})
-
-
-if __name__ == "__main__":
-    main("foo")

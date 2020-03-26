@@ -9,13 +9,13 @@ flask = "*"
 requests = "*"
 
 [packages]
-rapidfuzz = "*"
 numpy = "*"
 twython = "*"
 humanize = "*"
 jupyter = "*"
 pandas = "*"
 matplotlib = "*"
+rapidfuzz = "*"
 
 [requires]
 python_version = "3.7"

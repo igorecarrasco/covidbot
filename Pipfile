@@ -15,7 +15,9 @@ humanize = "*"
 jupyter = "*"
 pandas = "*"
 matplotlib = "*"
-rapidfuzz = "*"
+fuzzywuzzy = "*"
+scipy = "*"
+beautifulsoup4 = "*"
 
 [requires]
 python_version = "3.7"

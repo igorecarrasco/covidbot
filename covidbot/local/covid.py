@@ -5,7 +5,7 @@ from typing import ClassVar
 
 import numpy as np
 import requests
-from rapidfuzz import process
+from fuzzywuzzy import process
 from numpy import random
 
 from .utils import distribution
@@ -15,7 +15,6 @@ class Covid:
     api_base: ClassVar[str] = "https://corona.lmao.ninja"
     non_countries: ClassVar[list] = ["Diamond Princess"]
 
-    @property
     def world_data(self) -> dict:
         """
         Gets worldwide data.
@@ -36,7 +35,7 @@ class Covid:
 
         return data
 
-    def __country(self, country: str) -> dict:
+    def country(self, country: str) -> dict:
         """
         Gets data for a specific country. Uses fuzzy matching 
         to get the most highly likely match for an input 
@@ -48,10 +47,9 @@ class Covid:
         country: str
             The country name in question
         """
-        data = self.__countries_data__
+        data = self.countries_data
         country_names = [i["country"] for i in data]
-        c: str = process.extractOne(country, country_names)[0]
-
+        c: str = process.extractOne(country, country_names, score_cutoff=85)[0]
         return [i for i in data if i["country"] == c][0]
 
     def random_country_data(self) -> dict:

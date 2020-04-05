@@ -18,6 +18,7 @@ matplotlib = "*"
 fuzzywuzzy = "*"
 scipy = "*"
 beautifulsoup4 = "*"
+python-levenshtein = "*"
 
 [requires]
 python_version = "3.7"
